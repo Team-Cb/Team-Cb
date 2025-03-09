@@ -101,6 +101,7 @@ header>form>button {
     width: var(--center);
     margin-top: 10px;
     border-bottom: 1px navy solid;
+    margin-bottom: 200px;
 }
 
 section>div>div {
@@ -147,6 +148,12 @@ section>div>div {
     align-items: center;
     justify-content: center;
     margin-top: 250px;
+    position: fixed;
+    bottom: 0;
+    right: var(--right);
+    left: var(--left);
+    margin-left: auto;
+    margin-right: auto;
     /*Remove to add table*/
 }
 
@@ -158,8 +165,22 @@ section>div>div {
     margin: 5px;
 }
 
-#currentQueue>h4 {
-    grid-row: 2;
+#currentQueue .circle {
+    margin: auto;
+    width: 40vh;
+    height: 40vh;
+    display: inherit;
+    border-width: 5px;
+    border-radius: 50%;
+    border-color: black;
+    border-style: solid;
+    align-self: center;
+    position: fixed;
+    left: var(--left);
+    right: var(--right);
+}
+
+#currentQueue .circle h4 {
     width: 40px;
     padding: 40px 20px;
     background-color: white;
