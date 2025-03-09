@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'gotmilk?';
-    src: url('/Phenix\ American\ Regular.ttf') format('truetype');
+    src: url('assets/Phenix\ American\ Regular.ttf') format('truetype');
 }
-
 * {
+    overflow: hidden;
     margin: 0px;
     font-family: 'Times New Roman', Times, serif;
 }

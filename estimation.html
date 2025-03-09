@@ -1,68 +1,75 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset = "UTF-8">
-        <meta name = "keywords" content = "Scrum, User story, Estimations">
-        <title>Estimation</title>
-        <link rel="stylesheet" href="common.css">
-        <link rel="stylesheet" href="estimation.css">
-    </head>
-    <body class="container">
-        <header>
-            <!--Placed title in head and replaced it here with h1-->
-            <h1>Got Scrum?</h1>
-            <h5><strong>Team CB's Room<br>ID: 12345</strong></h5>
-            <a href="index.html">Leave</a>
-        </header>
-        <section id="currentQueue">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Scrum, User story, Estimations">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimation</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="estimation.css">
+</head>
+
+<body class="container">
+    <header>
+        <!--Placed title in head and replaced it here with h1-->
+        <h1>got scrum?</h1>
+        <h5><strong><span id="roomName">Team CB</span>'s Room<br>ID: <span id="roomID">12345</span></strong></h5>
+        <form action="index.html">
+        <button type="submit">Leave</button>
+        </form>
+    </header>
+    <section id="currentQueue">
+        <div>
             <div>
                 <h3>Now estimating:</h3>
-                <h4>Current User Story</h4>
+                <h4 id="currentStory">Current User Story</h4>
             </div>
-            
-            <!--Lowered AVG in the heading heirarchy-->
-            <h4>AVG</h4>
-            <!--Increased Story Queue in the heading heirarchy, added aside, and id tag.--> 
-            <ul>
-                <li>0</li>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>5</li>
-                <li>8</li>
-                <li>13</li>
-                <li>20</li>
-                <li>40</li>
-                <li>100</li>
-            </ul>
-        </section>
-        <aside id="storyQueue">
-            <h2>Story Queue</h2>
-            <h6><i>Up next:</i></h6>
-            <div></div>
-            <ol>
-                <li>User Story #1</li>
-                <li></li>
-                <li>User Story #2</li>
-                <li>User Story #3</li>
-                <li>User Story #4</li>
-            </ol>
-            <div></div>
-        </aside>
-        <aside id="estimations">
-            <!--increased Story Queue in the heading heirarchy and id tag.-->
-            <h2>Estimations</h2>
-            <ul>
-                <li>US: 20</li>
-                <li>US: 17</li>
-                <li>US: 13</li>
-                <li>US: 10</li>
-                <li>US: 5</li>
-            </ul>      
-        </aside>
-    </body>
-    
+            <hr>
+        </div>
+        <!--Lowered AVG in the heading heirarchy-->
+        <h4 id="average">AVG</h4>
+        <!--Increased Story Queue in the heading heirarchy, added aside, and id tag.-->
+        <ul>
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>5</li>
+            <li>8</li>
+            <li>13</li>
+            <li>20</li>
+            <li>40</li>
+            <li>100</li>
+        </ul>
+    </section>
+    <aside id="storyQueue">
+        <h2>Story Queue</h2>
+        <hr>
+        <h6><i>Up next:</i></h6>
+        <div></div>
+        <ol>
+            <li id="onDeck">User Story #1</li>
+        </ol>
+        <hr>
+        <ol id="queue">
+            <li>User Story #2</li>
+            <li>User Story #3</li>
+            <li>User Story #4</li>
+        </ol>
+    </aside>
+    <aside id="estimations">
+        <!--increased Story Queue in the heading heirarchy and id tag.-->
+        <h2>Estimations</h2>
+        <hr>
+        <ul>
+            <li>US: 20</li>
+            <li>US: 17</li>
+            <li>US: 13</li>
+            <li>US: 10</li>
+            <li>US: 5</li>
+        </ul>
+    </aside>
+</body>
+
 </html>
-
-
-
