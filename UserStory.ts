@@ -1,0 +1,5 @@
+class UserStory {
+
+}
+
+export {UserStory};
