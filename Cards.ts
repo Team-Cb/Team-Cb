@@ -13,3 +13,5 @@ class Card {
         return this.cardValue;
     }
 }
+
+export {Card};
