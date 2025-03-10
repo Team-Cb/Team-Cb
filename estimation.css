@@ -1,5 +1,6 @@
 /* Common Estimation Styles */
-li {
+li button {
+    font-size: 15px;
     padding: 15px;
     background-color: rgba(211, 211, 211, 0.211);
     margin: 10px;
@@ -199,6 +200,7 @@ h2 {
     display: inline-block;
     width: 3rem;
 }
+
 
 /* Action Styles */
 #storyQueue > ol > li:hover {
