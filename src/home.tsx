@@ -4,7 +4,7 @@ import "./index.css"
 const JoinRoom = () => {
     return (<>
         <div className="index">
-            <h1>got scrum?</h1>
+            <h1>Got Scrum?</h1>
             <Form type="join" />
             <footer>
                 <p>Create your own room for free here: <NavLink to={"/create-room"}>Create New Room</NavLink></p>
