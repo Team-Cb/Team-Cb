@@ -1,15 +1,20 @@
 /* Common Estimation Styles */
-li {
+li button {
+    font-size: 18px;
     padding: 15px;
     background-color: rgba(211, 211, 211, 0.211);
     margin: 10px;
+    width: 70px;
+    height: 80px;
+    padding: 10px;
     border-radius: 10px;
     text-align: center;
     box-shadow: rgba(0, 0, 128, 0.25) 2px 2px 5px;
 }
 
+
 /* Body Styles */
-.container {
+#root {
     display: grid;
     grid: auto auto auto / auto auto auto;
 }
@@ -59,7 +64,7 @@ header > a {
 }
 
 /* Styles For the Current Queue */
-.container > #currentQueue {
+#root > #currentQueue {
     grid-row: 2;
     grid-column: 2;
     width: 66vw;
@@ -112,6 +117,7 @@ section > div {
     display: flex;
     justify-content: center;
     margin-top: 250px; /*Remove to add table*/
+    gap: 30px;
 }
 
 #currentQueue > ul > li {
@@ -132,7 +138,7 @@ section > div {
 }
 
 /* Story Queue Styles*/
-.container > #storyQueue {
+#root #storyQueue {
     grid-row: 2 / span 2;
     grid-column: 1;
     height: 85vh;
@@ -182,7 +188,7 @@ h2 {
 }
 
 /* Estimation Styles */
-.container > #estimations {
+#root #estimations {
     grid-row: 2 / span 2;
     grid-column: 3;
     height: 85vh;
@@ -199,6 +205,7 @@ h2 {
     display: inline-block;
     width: 3rem;
 }
+
 
 /* Action Styles */
 #storyQueue > ol > li:hover {
