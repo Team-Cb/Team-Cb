@@ -1,10 +1,11 @@
 class UserStory {
     private name: string;
     private description: string;
-    private storyValues: number;
-    
-    constructor(name: string) {
+    private storyValues: number | undefined;
+    constructor(name = "") {
         this.name = name;
+        this.description = "";
+        this.storyValues = undefined;
     }
     public setStoryValues(): void {
         this.storyValues = 0;
@@ -12,14 +13,18 @@ class UserStory {
 
     public setDescription(): void { }
 
-    public getStoryValues(): number {
+    public getName(): string {
+        return this.name;
+    }
+
+    public getStoryValues(): number | undefined {
         return this.storyValues;
     }
 
     public getDescription(): string {
         return `${this.description}`;
     }
-    
+
     public toString(): string {
         return `${this.name}`;
     }
@@ -32,7 +37,7 @@ class StoryQueue {
     }
     // add to the array
     public addStory(): void {
-        this.stories.push(this.stories[]);
+        this.stories.push(new UserStory());
 
     }
     // get the next element in the array
@@ -45,4 +50,4 @@ class StoryQueue {
         }
     }
 }
-export {UserStory, StoryQueue};
+export { UserStory, StoryQueue };
