@@ -6,7 +6,7 @@ const stylesHandler = 'style-loader';
 const config = {
             entry: './src/index.tsx',
             output: {
-                    path: path.resolve(__dirname, 'dist'),
+                    path: path.resolve(__dirname, './'),
                     publicPath: '/'
             },
             resolve: {
@@ -19,7 +19,7 @@ const config = {
             },
             plugins: [
                 new HtmlWebpackPlugin({
-                    template: 'index.html'
+                    template: './template/index.html'
                 })
             ],
             module: {
