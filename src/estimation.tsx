@@ -1,7 +1,11 @@
 import React from "react"
 import "./estimation.css"
-import { UserStory } from "./UserStory"
+import { StoryQueue, UserStory } from "./UserStory"
 import { NavLink } from "react-router-dom"
+
+let storyQueue: StoryQueue;
+storyQueue = new StoryQueue();
+
 const Estimation = () => {
     return (<>
         <header>
@@ -10,7 +14,7 @@ const Estimation = () => {
             <NavLink to={"/"}>Leave</NavLink>
         </header>
         <CurrentQueue />
-        <StoryQueue />
+        <Queue />
         <Estimations />
     </>)
 }
@@ -36,7 +40,7 @@ const CurrentQueue = () => {
         </section>
     )
 }
-const StoryQueue = () => {
+const Queue = () => {
 
     return (
         <aside id="storyQueue">
@@ -57,11 +61,13 @@ const StoryQueue = () => {
 const Story = (props: { name: string }) => {
     let story: UserStory;
     story = new UserStory(props.name);
+    storyQueue.addStory()
     return (
         <li>
-            {story.getName()}
+            {story.toString()}
         </li>
     )
+
 }
 const Estimations = () => {
     return (

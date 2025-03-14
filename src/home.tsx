@@ -3,20 +3,25 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./index.css"
 const JoinRoom = () => {
     return (<>
-        <h1>got scrum?</h1>
-        <Form type="join" />
-        <footer>
-            <p>Create your own room for free here: <NavLink to={"/create-room"}>Create New Room</NavLink></p>
-        </footer>
+        <div className="index">
+            <h1>got scrum?</h1>
+            <Form type="join" />
+            <footer>
+                <p>Create your own room for free here: <NavLink to={"/create-room"}>Create New Room</NavLink></p>
+            </footer>
+
+        </div>
     </>);
 }
 const CreateRoom = () => {
     return (<>
-        <h1>Create Room</h1>
-        <Form type="create" />
-        <footer>
-            <p>Join a room for free here: <NavLink to={"/"}>Join Room</NavLink></p>
-        </footer>
+        <div className="index">
+            <h1>Create Room</h1>
+            <Form type="create" />
+            <footer>
+                <p>Join a room for free here: <NavLink to={"/"}>Join Room</NavLink></p>
+            </footer>
+        </div>
     </>)
 }
 const Form = (props: { type: string; }) => {
