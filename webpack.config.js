@@ -6,8 +6,8 @@ const stylesHandler = 'style-loader';
 const config = {
             entry: './src/index.tsx',
             output: {
-                    path: path.resolve(__dirname, './'),
-                    publicPath: '/'
+                path: path.resolve(__dirname, './'),
+                publicPath: '/Team-Cb-1'
             },
             resolve: {
                 extensions: [".ts", ".tsx", ".js"]
