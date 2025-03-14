@@ -37,8 +37,12 @@ class StoryQueue {
     }
     // get the next element in the array
     public nextStory(): UserStory | undefined {
-        //guard statement - if else
-        return this.stories.pop();
+        //guard statement
+        if (this.stories.pop()) {
+            return this.stories.pop();
+        } else {
+            return undefined;
+        }
     }
 }
 export {UserStory, StoryQueue};
