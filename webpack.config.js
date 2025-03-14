@@ -7,7 +7,7 @@ const config = {
             entry: './src/index.tsx',
             output: {
                 path: path.resolve(__dirname, './'),
-                publicPath: '/Team-Cb-1'
+                publicPath: '/'
             },
             resolve: {
                 extensions: [".ts", ".tsx", ".js"]
