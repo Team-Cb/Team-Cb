@@ -38,7 +38,7 @@ class StoryQueue {
     // get the next element in the array
     public nextStory(): UserStory | undefined {
         //guard statement
-        if (this.stories.pop()) {
+        if (this.stories.length === 0) {
             return this.stories.pop();
         } else {
             return undefined;
