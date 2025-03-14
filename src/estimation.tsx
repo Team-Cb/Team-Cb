@@ -64,7 +64,9 @@ const Story = (props: { name: string }) => {
     storyQueue.addStory()
     return (
         <li>
+<button>
             {story.toString()}
+</button>
         </li>
     )
 
