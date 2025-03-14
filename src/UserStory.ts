@@ -30,7 +30,7 @@ class UserStory {
     }
 }
 
-class StoryQueue {
+class UserStoryQueue {
     private stories: UserStory[];
     constructor() {
         this.stories = [];
@@ -50,4 +50,4 @@ class StoryQueue {
         }
     }
 }
-export { UserStory, StoryQueue };
+export { UserStory, UserStoryQueue };
