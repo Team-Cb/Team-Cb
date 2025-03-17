@@ -35,14 +35,9 @@ class StoryQueue {
         this.stories.push(this.stories[]);
 
     }
-    // get the next element in the array
+    // get the next story in the array
     public nextStory(): UserStory | undefined {
-        //guard statement
-        if (this.stories.length === 0) {
-            return this.stories.pop();
-        } else {
-            return undefined;
-        }
+        return this.stories.shift();
     }
 }
 export {UserStory, StoryQueue};
