@@ -31,8 +31,8 @@ class StoryQueue {
         this.stories = [];
     }
     // add to the array
-    public addStory(): void {
-        this.stories.push(this.stories[]);
+    public addStory(story: UserStory): void {
+        this.stories.push(story);
 
     }
     // get the next story in the array
