@@ -2,19 +2,17 @@ class UserStory {
     private name: string;
     private description: string;
     private storyValues: number | undefined;
-    constructor(name = "") {
+    constructor(name = "", storyValues: undefined | number = undefined) {
         this.name = name;
         this.description = "";
-        this.storyValues = undefined;
+        this.storyValues = storyValues;
     }
-    public setStoryValues(): void {
-        this.storyValues = 0;
+    public setStoryValues(value: number): void {
+        this.storyValues = value;
     }
 
-    public setDescription(): void { }
-
-    public getName(): string {
-        return this.name;
+    public setDescription(description: string): void {
+        this.description = description;
     }
 
     public getStoryValues(): number | undefined {
@@ -32,22 +30,28 @@ class UserStory {
 
 class UserStoryQueue {
     private stories: UserStory[];
+    public length: number;
     constructor() {
         this.stories = [];
+        this.length = this.stories.length;
     }
     // add to the array
-    public addStory(): void {
-        this.stories.push(new UserStory());
-
+    public addStory(story: UserStory): void {
+        this.stories.push(story);
+        this.length = this.stories.length;
+    }
+    public isNext(): boolean {
+        return this.stories.length != 0;
+    }
+    public findAt(i: number): UserStory | undefined {
+        return this.stories.at(i);
     }
     // get the next element in the array
     public nextStory(): UserStory | undefined {
-        //guard statement
-        if (this.stories.length === 0) {
-            return this.stories.pop();
-        } else {
-            return undefined;
-        }
+        let next = this.stories.shift();
+        this.length = this.stories.length;
+        return next;
     }
+
 }
 export { UserStory, UserStoryQueue };
