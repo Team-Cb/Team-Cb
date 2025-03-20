@@ -28,6 +28,9 @@ app.get("/api/estimations", (inRequest: Request, inResponse:Response) => {
     inResponse.type("json");
     inResponse.json(getEstimations);
 })
+app.get("/02beb6f43de7e44d0a24.ttf", (inRequest: Request, inResponse: Response) => {
+    inResponse.sendFile(path.join(__dirname, "../../../client/dist/02beb6f43de7e44d0a24.ttf"));
+});
 app.get("/main.js", (inRequest: Request, inResponse: Response) => {
     inResponse.sendFile(path.join(__dirname, "../../../client/dist/main.js"));
 });

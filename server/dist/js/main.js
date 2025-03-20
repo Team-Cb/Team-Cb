@@ -33,6 +33,9 @@ app.get("/api/estimations", (inRequest, inResponse) => {
     inResponse.type("json");
     inResponse.json(Data_1.getEstimations);
 });
+app.get("/02beb6f43de7e44d0a24.ttf", (inRequest, inResponse) => {
+    inResponse.sendFile(path_1.default.join(__dirname, "../../../client/dist/02beb6f43de7e44d0a24.ttf"));
+});
 app.get("/main.js", (inRequest, inResponse) => {
     inResponse.sendFile(path_1.default.join(__dirname, "../../../client/dist/main.js"));
 });
