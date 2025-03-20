@@ -14,7 +14,7 @@ const storyQueue = new UserStory_1.UserStoryQueue();
 const estimations = new UserStory_1.UserStoryQueue();
 const cards = new Cards_1.Cards();
 let currentStory;
-const URL = "http://localhost/api/";
+const URL = "http://localhost:8080/api/";
 storyQueue.fetchStories();
 cards.fetchCards();
 estimations.fetchStories();

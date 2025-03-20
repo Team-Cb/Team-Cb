@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cards = exports.Card = void 0;
 const axios_1 = __importDefault(require("axios"));
-const URL = "http://localhost/api/";
+const URL = "http://localhost:8080/api/";
 class Card {
     constructor(cardValue) {
         this.cardValue = cardValue;

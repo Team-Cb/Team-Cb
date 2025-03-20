@@ -8,7 +8,7 @@ const storyQueue: UserStoryQueue = new UserStoryQueue();
 const estimations: UserStoryQueue = new UserStoryQueue();
 const cards: Cards = new Cards();
 let currentStory: UserStory | undefined;
-const URL = "http://localhost/api/";
+const URL = "http://localhost:8080/api/";
 
 storyQueue.fetchStories();
 cards.fetchCards();

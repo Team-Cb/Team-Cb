@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL = "http://localhost/api/";
+const URL = "http://localhost:8080/api/";
 
 class Card {
     private cardValue: number;
