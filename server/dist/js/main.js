@@ -31,7 +31,7 @@ app.get("/api/storyQueue", (inRequest, inResponse) => {
 });
 app.get("/api/estimations", (inRequest, inResponse) => {
     inResponse.type("json");
-    inResponse.json(Data_1.getEstimations);
+    inResponse.json((0, Data_1.getEstimations)());
 });
 app.get("/02beb6f43de7e44d0a24.ttf", (inRequest, inResponse) => {
     inResponse.sendFile(path_1.default.join(__dirname, "../../../client/dist/02beb6f43de7e44d0a24.ttf"));
@@ -41,6 +41,11 @@ app.get("/main.js", (inRequest, inResponse) => {
 });
 app.get("/*", (inRequest, inResponse) => {
     inResponse.sendFile(path_1.default.join(__dirname, "../../../client/dist/index.html"));
+});
+app.post("/api/estimations", (inRequest, inResponse) => {
+    inResponse.type("json");
+    inResponse.json(inRequest.body);
+    console.log(inRequest.body);
 });
 app.listen(port, () => { console.log("Server listening on port: " + port); });
 //# sourceMappingURL=main.js.map

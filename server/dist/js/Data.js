@@ -4,11 +4,10 @@ exports.getEstimations = exports.getStoryQueue = exports.getCard = exports.getCa
 const Cards_1 = require("./Cards");
 const UserStory_1 = require("./UserStory");
 const cards = [
-    new Cards_1.Card(0),
     new Cards_1.Card(1),
     new Cards_1.Card(2),
     new Cards_1.Card(3),
-    new Cards_1.Card(4),
+    new Cards_1.Card(5),
     new Cards_1.Card(8),
     new Cards_1.Card(13),
     new Cards_1.Card(20),

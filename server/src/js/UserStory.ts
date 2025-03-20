@@ -62,6 +62,9 @@ class UserStoryQueue {
     public getLength(): number {
         return this.stories.length
     }
+    public removeStory(id: number): void {
+        this.stories.splice(id, 1);
+    }
     // get the next element in the array
     public nextStory(): UserStory | undefined {
         let next = this.stories.shift();

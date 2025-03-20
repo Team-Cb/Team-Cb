@@ -59,6 +59,9 @@ class UserStoryQueue {
     getLength() {
         return this.stories.length;
     }
+    removeStory(id) {
+        this.stories.splice(id, 1);
+    }
     // get the next element in the array
     nextStory() {
         let next = this.stories.shift();

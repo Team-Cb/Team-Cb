@@ -1,10 +1,43 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
-const react_1 = __importDefault(require("react"));
+const react_1 = __importStar(require("react"));
 const axios_1 = __importDefault(require("axios"));
 require("../css/estimation.css");
 const UserStory_1 = require("./UserStory");
@@ -15,41 +48,34 @@ const estimations = new UserStory_1.UserStoryQueue();
 const cards = new Cards_1.Cards();
 let currentStory;
 const URL = "http://localhost:8080/api/";
-storyQueue.fetchStories();
+const fetch = axios_1.default.create({
+    baseURL: URL,
+    headers: {
+        "Content-type": "application/json"
+    },
+    timeout: 1000
+});
 cards.fetchCards();
+storyQueue.fetchStories();
 estimations.fetchStories();
-let backlog = new UserStory_1.UserStoryQueue();
-backlog.addStory(new UserStory_1.UserStory("US", 1));
-backlog.addStory(new UserStory_1.UserStory("US", 2));
-backlog.addStory(new UserStory_1.UserStory("US", 4));
-backlog.addStory(new UserStory_1.UserStory("US", 8));
-backlog.addStory(new UserStory_1.UserStory("US", 13));
-backlog.addStory(new UserStory_1.UserStory("US", 20));
-backlog.addStory(new UserStory_1.UserStory("US", 40));
-backlog.addStory(new UserStory_1.UserStory("US", 100));
 const Estimation = () => {
     return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("header", { children: [(0, jsx_runtime_1.jsx)("h1", { children: "Got Scrum?" }), (0, jsx_runtime_1.jsx)("h5", { children: (0, jsx_runtime_1.jsxs)("strong", { children: ["Team CB's Room", (0, jsx_runtime_1.jsx)("br", {}), "ID: 12345"] }) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.NavLink, { to: "/", children: "Leave" })] }), (0, jsx_runtime_1.jsx)(CurrentQueue, { storyQueue: storyQueue, cards: cards }), (0, jsx_runtime_1.jsx)(StQueue, { storyQueue: storyQueue }), (0, jsx_runtime_1.jsx)(Estimations, { estimations: estimations })] }));
 };
 const CurrentQueue = (props) => {
     const [currentStoryQueue, setStoryQueue] = react_1.default.useState(props.storyQueue);
     const [currentCards, setCards] = react_1.default.useState(props.cards);
-    axios_1.default.get(URL + "storyQueue").then((response) => {
-        setStoryQueue(response.data.stories);
-    });
-    axios_1.default.get(URL + "cards").then((response) => {
-        setCards(response.data);
-    });
+    (0, react_1.useEffect)(() => {
+        fetch.get("storyQueue").then((response) => {
+            setStoryQueue(response.data.stories);
+        });
+        fetch.get("cards").then((response) => {
+            setCards(response.data.cards);
+        });
+    }, []);
     currentStory = storyQueue.findAt(0);
     let avg;
     let total = 0;
-    if (backlog.getLength() !== 0) {
-        avg = total / backlog.getLength();
-    }
-    else
-        avg = 0;
     let cardsList = cards.getCards();
-    cardsList.forEach((card) => {
-    });
     const ListCards = () => {
         return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: cardsList.map((card, i) => ((0, jsx_runtime_1.jsx)(EstimationButton, { card: card }, i))) }));
     };
@@ -57,9 +83,11 @@ const CurrentQueue = (props) => {
 };
 const StQueue = (props) => {
     const [currentStoryQueue, setStoryQueue] = react_1.default.useState(props.storyQueue);
-    axios_1.default.get(URL + "storyQueue").then((response) => {
-        setStoryQueue(response.data.stories);
-    });
+    (0, react_1.useEffect)(() => {
+        fetch.get("storyQueue").then((response) => {
+            setStoryQueue(response.data.stories);
+        });
+    }, []);
     const List = () => {
         let stories = [];
         for (let index = 1; index < storyQueue.getLength() - 1; index++) {
@@ -86,26 +114,47 @@ const Story = (props) => {
     }
 };
 const Estimations = (props) => {
+    let story;
     const Estimation = (props) => {
         if (props.userStory !== undefined && props.userStory.getStoryValues() !== undefined) {
+            story = new UserStory_1.UserStory(props.userStory.toString(), props.userStory.getStoryValues());
+            estimations.addStory(story);
             return ((0, jsx_runtime_1.jsxs)("li", { children: [props.userStory.toString(), ": ", (0, jsx_runtime_1.jsx)("br", {}), props.userStory.getStoryValues()] }));
         }
     };
     const [currentEstimations, setEstimations] = react_1.default.useState(props.estimations);
-    axios_1.default.get(URL + "estimations").then((response) => {
-        setEstimations(response.data.stories);
-    });
+    (0, react_1.useEffect)(() => {
+        fetch.get("estimations").then((response) => {
+            setEstimations(response.data);
+            console.log(response.data);
+            response.data.forEach((story) => {
+                estimations.addStory(new UserStory_1.UserStory(story.name, story.storyValues));
+            });
+        });
+    }, []);
     const List = () => {
-        let stories = [];
-        for (let index = 0; index < backlog.getLength(); index++) {
-            stories.push((0, jsx_runtime_1.jsx)(Estimation, { userStory: backlog.findAt(index) }, index));
+        let estimatedStories = [];
+        for (let index = 0; index < estimations.getLength(); index++) {
+            estimatedStories.push((0, jsx_runtime_1.jsx)(Estimation, { userStory: estimations.findAt(index) }, index));
+            console.log(estimations.getLength());
         }
-        return stories;
+        return estimatedStories;
     };
     return ((0, jsx_runtime_1.jsxs)("aside", { id: "estimations", children: [(0, jsx_runtime_1.jsx)("h2", { children: "Estimations" }), (0, jsx_runtime_1.jsx)("ul", { children: (0, jsx_runtime_1.jsx)(List, {}) })] }));
 };
 const EstimationButton = (props) => {
-    return ((0, jsx_runtime_1.jsx)("li", { children: (0, jsx_runtime_1.jsx)("button", { type: "submit", children: props.card.getValue() }) }));
+    const submit = () => {
+        console.log("Estimation: " + props.card.getValue());
+        if (currentStory != undefined) {
+            currentStory.setStoryValues(props.card.getValue());
+            storyQueue.removeStory(0);
+            estimations.addStory(currentStory);
+            fetch.post("estimations", { story: currentStory, value: props.card.getValue() });
+            currentStory = storyQueue.findAt(0);
+            storyQueue.fetchStories();
+        }
+    };
+    return ((0, jsx_runtime_1.jsx)("li", { children: (0, jsx_runtime_1.jsx)("button", { onClick: submit, value: props.card.getValue(), children: props.card.getValue() }) }));
 };
 exports.default = Estimation;
 //# sourceMappingURL=estimation.js.map

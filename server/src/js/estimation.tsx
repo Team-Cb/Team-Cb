@@ -1,27 +1,27 @@
-import React from "react"
+import React, { use, useEffect } from "react"
 import axios from "axios"
 import "../css/estimation.css"
 import { UserStoryQueue, UserStory } from "./UserStory"
 import { NavLink } from "react-router-dom"
 import { Card, Cards } from "./Cards"
+import { log } from "console"
 const storyQueue: UserStoryQueue = new UserStoryQueue();
 const estimations: UserStoryQueue = new UserStoryQueue();
 const cards: Cards = new Cards();
 let currentStory: UserStory | undefined;
 const URL = "http://localhost:8080/api/";
 
-storyQueue.fetchStories();
+const fetch = axios.create({
+    baseURL: URL,
+    headers: {
+        "Content-type": "application/json"
+    },
+    timeout: 1000
+});
+
 cards.fetchCards();
+storyQueue.fetchStories();
 estimations.fetchStories();
-let backlog = new UserStoryQueue();
-backlog.addStory(new UserStory("US", 1))
-backlog.addStory(new UserStory("US", 2))
-backlog.addStory(new UserStory("US", 4))
-backlog.addStory(new UserStory("US", 8))
-backlog.addStory(new UserStory("US", 13))
-backlog.addStory(new UserStory("US", 20))
-backlog.addStory(new UserStory("US", 40))
-backlog.addStory(new UserStory("US", 100))
 
 const Estimation = () => {
     return (<>
@@ -32,33 +32,31 @@ const Estimation = () => {
         </header>
         <CurrentQueue storyQueue={storyQueue} cards={cards} />
         <StQueue storyQueue={storyQueue} />
-        <Estimations estimations={estimations}/>
+        <Estimations estimations={estimations} />
     </>)
 }
 const CurrentQueue = (props: { storyQueue: UserStoryQueue; cards: Cards }) => {
     const [currentStoryQueue, setStoryQueue] = React.useState(props.storyQueue);
     const [currentCards, setCards] = React.useState(props.cards);
-    axios.get(URL + "storyQueue").then((response) => {
-        setStoryQueue(response.data.stories);
-    })
-    axios.get(URL + "cards").then((response) => {
-        setCards(response.data);
-    })
-    
+    useEffect(() => {
+        fetch.get("storyQueue").then((response) => {
+            setStoryQueue(response.data.stories);
+        })
+        fetch.get("cards").then((response) => {
+            setCards(response.data.cards);
+        })
+    }, [])
+
+
     currentStory = storyQueue.findAt(0);
     let avg: number;
     let total = 0;
-    if (backlog.getLength() !== 0) {
-        avg = total / backlog.getLength();
-    } else avg = 0;
     let cardsList = cards.getCards();
-    cardsList.forEach((card) => {
-
-    })
     const ListCards = () => {
         return (
             <>
                 {cardsList.map((card, i) => (
+
                     <EstimationButton key={i} card={card} />
                 ))}
             </>
@@ -80,9 +78,11 @@ const CurrentQueue = (props: { storyQueue: UserStoryQueue; cards: Cards }) => {
 }
 const StQueue = (props: { storyQueue: UserStoryQueue }) => {
     const [currentStoryQueue, setStoryQueue] = React.useState(props.storyQueue);
-    axios.get(URL + "storyQueue").then((response) => {
-        setStoryQueue(response.data.stories);
-    })
+    useEffect(() => {
+        fetch.get("storyQueue").then((response) => {
+            setStoryQueue(response.data.stories);
+        })
+    }, [])
     const List = () => {
         let stories = []
         for (let index = 1; index < storyQueue.getLength() - 1; index++) {
@@ -123,24 +123,36 @@ const Story = (props: { story: UserStory | undefined; list: boolean }) => {
 
 }
 
-const Estimations = (props: {estimations: UserStoryQueue}) => {
+const Estimations = (props: { estimations: UserStoryQueue }) => {
+    let story: UserStory;
     const Estimation = (props: { userStory: UserStory | undefined }) => {
         if (props.userStory !== undefined && props.userStory.getStoryValues() !== undefined) {
+            story = new UserStory(props.userStory.toString(), props.userStory.getStoryValues());
+            estimations.addStory(story)
             return (
                 <li>{props.userStory.toString()}: <br />{props.userStory.getStoryValues()}</li>
             )
         }
     }
     const [currentEstimations, setEstimations] = React.useState(props.estimations);
-    axios.get(URL + "estimations").then((response) => {
-        setEstimations(response.data.stories);
-    })
+    useEffect(() => {
+        fetch.get("estimations").then((response) => {
+            setEstimations(response.data);
+            console.log(response.data);
+            response.data.forEach((story: any) => {
+                estimations.addStory(new UserStory(story.name, story.storyValues))
+            }
+            )
+        })
+    }, [])
     const List = () => {
-        let stories = []
-        for (let index = 0; index < backlog.getLength(); index++) {
-            stories.push(<Estimation key={index} userStory={backlog.findAt(index)} />)
+        let estimatedStories = [];
+
+        for (let index = 0; index < estimations.getLength(); index++) {
+            estimatedStories.push(<Estimation key={index} userStory={estimations.findAt(index)} />)
+            console.log(estimations.getLength());
         }
-        return stories
+        return estimatedStories;
     }
     return (
         <aside id="estimations">
@@ -152,8 +164,14 @@ const Estimations = (props: {estimations: UserStoryQueue}) => {
     )
 }
 const EstimationButton = (props: { card: Card }) => {
+    const submit = () => {
+        if (currentStory != undefined) {
+            fetch.post("estimations", { story: currentStory, value: props.card.getValue() })
+        }
+        
+    }
     return (
-        <li><button type="submit">{props.card.getValue()}</button></li>
+        <li><button onClick={submit} value={props.card.getValue()}>{props.card.getValue()}</button></li>
     )
 }
 export default Estimation;

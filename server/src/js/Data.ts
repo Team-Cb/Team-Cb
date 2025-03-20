@@ -2,11 +2,10 @@ import { Card } from "./Cards";
 import { UserStory } from "./UserStory";
 
 const cards: Card[] = [
-    new Card(0),
     new Card(1),
     new Card(2),
     new Card(3),
-    new Card(4),
+    new Card(5),
     new Card(8),
     new Card(13),
     new Card(20),
