@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
 const Data_1 = require("./Data");
-const port = 80;
+const port = 8080;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use("/", express_1.default.static(path_1.default.join(__dirname, "../../client/dist")));

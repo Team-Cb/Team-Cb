@@ -1,7 +1,7 @@
 import path from "path";
 import express, { Express, NextFunction, Request, Response } from "express"
 import { getCards, getCard, getStoryQueue, getEstimations } from "./Data";
-const port = 80;
+const port = 8080;
 const app: Express = express();
 app.use(express.json());
 app.use("/", express.static(path.join(__dirname, "../../client/dist")));
