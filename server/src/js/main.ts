@@ -43,4 +43,4 @@ app.post("/api/estimations", (inRequest: Request, inResponse: Response) => {
     inResponse.json(inRequest.body);
     console.log(inRequest.body);
 });
-app.listen(port, () => { console.log("Server listening on port: " + port) });
+app.listen(port, () => { console.log("Server at: http://localhost:" + port) });
