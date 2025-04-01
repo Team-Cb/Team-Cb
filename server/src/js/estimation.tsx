@@ -1,10 +1,9 @@
 import React, { use, useEffect } from "react"
 import axios from "axios"
-import "../css/estimation.css"
+import "../../../client/dist/css/estimation.css"
 import { UserStoryQueue, UserStory } from "./UserStory"
 import { NavLink } from "react-router-dom"
 import { Card, Cards } from "./Cards"
-import { log } from "console"
 const storyQueue: UserStoryQueue = new UserStoryQueue();
 const estimations: UserStoryQueue = new UserStoryQueue();
 const cards: Cards = new Cards();
