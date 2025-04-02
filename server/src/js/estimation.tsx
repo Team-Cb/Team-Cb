@@ -8,7 +8,7 @@ const storyQueue: UserStoryQueue = new UserStoryQueue();
 const estimations: UserStoryQueue = new UserStoryQueue();
 const cards: Cards = new Cards();
 let currentStory: UserStory | undefined;
-const URL = "http://localhost:8080/api/"; // base url for http requests
+const URL = "http://" + window.location.host + "/api/"; // base url for http requests
 
 const fetch = axios.create({
     baseURL: URL,
