@@ -35,7 +35,7 @@ class UserStoryQueue {
         this.stories = [];
     }
     public async fetchStories(): Promise<void> {
-        const URL = "http://" + window.location.host + "/api/"; // base url for http requests
+        const URL = window.location.protocol + "//" + window.location.host + "/api/"; // base url for http requests
         let responses: any[] = [];
         await axios.get(URL + "storyQueue")
             .then((response) => {
