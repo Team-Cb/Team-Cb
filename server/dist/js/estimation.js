@@ -98,7 +98,7 @@ const StQueue = (props) => {
         }
         return stories;
     };
-    return ((0, jsx_runtime_1.jsxs)("aside", { id: "storyQueue", children: [(0, jsx_runtime_1.jsx)("h2", { children: "Story Queue" }), (0, jsx_runtime_1.jsx)("h6", { children: (0, jsx_runtime_1.jsx)("i", { children: "Up next:" }) }), (0, jsx_runtime_1.jsx)("div", {}), (0, jsx_runtime_1.jsx)("ol", { children: (0, jsx_runtime_1.jsx)(List, {}) }), (0, jsx_runtime_1.jsx)("div", {})] }));
+    return ((0, jsx_runtime_1.jsxs)("aside", { id: "storyQueue", children: [(0, jsx_runtime_1.jsx)("h2", { children: "Story Queue" }), (0, jsx_runtime_1.jsx)("h6", { children: (0, jsx_runtime_1.jsx)("i", { children: "Up next:" }) }), (0, jsx_runtime_1.jsx)("div", {}), (0, jsx_runtime_1.jsx)("ol", { children: (0, jsx_runtime_1.jsx)(List, {}) }), (0, jsx_runtime_1.jsx)("div", {}), (0, jsx_runtime_1.jsx)("form", { children: (0, jsx_runtime_1.jsx)("button", { children: "Add Story" }) })] }));
 };
 const Story = (props) => {
     let story;

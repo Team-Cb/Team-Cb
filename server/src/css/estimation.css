@@ -222,6 +222,14 @@ h2 {
     box-shadow: none;
     width: 100%; */
 }
+#storyButton {
+    background-color: rgba(211, 211, 211, 0.211);
+    border: none; 
+    color: navy;
+    padding: 40px, 20px;
+    text-align: center;
+    font-size: 1 rem;
+}
 
 /* Estimation Styles */
 #root #estimations {
