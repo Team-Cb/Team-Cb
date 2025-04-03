@@ -2,8 +2,9 @@ import axios from "axios";
 class UserStory {
     private name: string;
     private description: string;
-    private storyValues: number | undefined;
-    constructor(name = "", storyValues: undefined | number = undefined) {
+    storyValues: number | undefined;
+    _id?: string;
+    constructor(name = "", storyValues: undefined | number = undefined, description = "") {
         this.name = name;
         this.description = "";
         this.storyValues = storyValues;

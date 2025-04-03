@@ -4,9 +4,9 @@ import "../../../client/dist/css/estimation.css"
 import { UserStoryQueue, UserStory } from "./UserStory"
 import { NavLink } from "react-router-dom"
 import { Card, Cards } from "./Cards"
-const storyQueue: UserStoryQueue = new UserStoryQueue();
-const estimations: UserStoryQueue = new UserStoryQueue();
-const cards: Cards = new Cards();
+let storyQueue: UserStoryQueue = new UserStoryQueue();
+let estimations: UserStoryQueue = new UserStoryQueue();
+let cards: Cards = new Cards();
 let currentStory: UserStory | undefined;
 const URL = window.location.protocol + "//" + window.location.host + "/api/"; // base url for http requests
 
@@ -15,12 +15,8 @@ const fetch = axios.create({
     headers: {
         "Content-type": "application/json"
     },
-    timeout: 1000 // timeout in ms for http requests
+    timeout: 3000 // timeout in ms for http requests
 });
-
-cards.fetchCards();
-storyQueue.fetchStories();
-estimations.fetchStories();
 
 const Estimation = () => { // returns Estimation page
     return (<>
@@ -35,22 +31,21 @@ const Estimation = () => { // returns Estimation page
     </>)
 }
 const CurrentQueue = (props: { storyQueue: UserStoryQueue; cards: Cards }) => { // returns middle section of Estimation page
-    const [currentStoryQueue, setStoryQueue] = React.useState(props.storyQueue);
     const [currentCards, setCards] = React.useState(props.cards);
-    useEffect(() => { // gets data for current section
-        fetch.get("storyQueue").then((response) => {
-            setStoryQueue(response.data.stories);
-        })
+    useEffect(() => { // gets estimated stories
         fetch.get("cards").then((response) => {
-            setCards(response.data.cards);
+            setCards(response.data);
+            response.data.forEach((card: any) => {
+                cards.addCard(new Card(card.cardValue))
+            }
+            )
         })
     }, [])
-
-
     currentStory = storyQueue.findAt(0);
     let avg: number;
     let total = 0;
     let cardsList = cards.getCards();
+    cardsList.sort(function(a:any, b:any){return a.cardValue - b.cardValue})
     const ListCards = () => { // returns Estimation card buttons
         return (
             <>
@@ -76,10 +71,14 @@ const CurrentQueue = (props: { storyQueue: UserStoryQueue; cards: Cards }) => { 
 
 }
 const StQueue = (props: { storyQueue: UserStoryQueue }) => { // returns the storyqueue section
-    const [currentStoryQueue, setStoryQueue] = React.useState(props.storyQueue);
-    useEffect(() => { // gets stories for storyqueue
+    const [currentQueue, setQueue] = React.useState(props.storyQueue);
+    useEffect(() => { // gets estimated stories
         fetch.get("storyQueue").then((response) => {
-            setStoryQueue(response.data.stories);
+            setQueue(response.data);
+            response.data.forEach((story: any) => {
+                storyQueue.addStory(new UserStory(story.name, story.storyValues))
+            }
+            )
         })
     }, [])
     const List = () => { // returns a list of stories for storyqueue
@@ -90,6 +89,9 @@ const StQueue = (props: { storyQueue: UserStoryQueue }) => { // returns the stor
             }
             stories.push(<Story key={index} story={storyQueue.findAt(index)} list={true} />)
         }
+        stories.push(<div key={0}><button onClick={() => {
+            fetch.post("storyQueue", new UserStory("New story"))
+        }}>Add Story</button></div>)
         return stories
     }
     return (
@@ -101,7 +103,6 @@ const StQueue = (props: { storyQueue: UserStoryQueue }) => { // returns the stor
                 <List />
             </ol>
             <div></div>
-            <form><button>Add Story</button></form>
         </aside>
     )
 }
@@ -125,15 +126,6 @@ const Story = (props: { story: UserStory | undefined; list: boolean }) => { // r
 
 const Estimations = (props: { estimations: UserStoryQueue }) => { // returns already estimated stories section
     let story: UserStory;
-    const Estimation = (props: { userStory: UserStory | undefined }) => { // returns an already estimated story
-        if (props.userStory !== undefined && props.userStory.getStoryValues() !== undefined) {
-            story = new UserStory(props.userStory.toString(), props.userStory.getStoryValues());
-            estimations.addStory(story)
-            return (
-                <li>{props.userStory.toString()}: <br />{props.userStory.getStoryValues()}</li>
-            )
-        }
-    }
     const [currentEstimations, setEstimations] = React.useState(props.estimations);
     useEffect(() => { // gets estimated stories
         fetch.get("estimations").then((response) => {
@@ -144,6 +136,15 @@ const Estimations = (props: { estimations: UserStoryQueue }) => { // returns alr
             )
         })
     }, [])
+    const Estimation = (props: { userStory: UserStory | undefined }) => { // returns an already estimated story
+        if (props.userStory !== undefined && props.userStory.getStoryValues() !== undefined) {
+            story = new UserStory(props.userStory.toString(), props.userStory.getStoryValues());
+            estimations.addStory(story)
+            return (
+                <li>{props.userStory.toString()}: <br />{props.userStory.getStoryValues()}</li>
+            )
+        }
+    }
     const List = () => { // returns already estimated stories as a list
         let estimatedStories = [];
 
@@ -163,10 +164,7 @@ const Estimations = (props: { estimations: UserStoryQueue }) => { // returns alr
 }
 const EstimationButton = (props: { card: Card }) => { // returns a single estimation card button
     const submit = () => {
-        if (currentStory != undefined) {
-            fetch.post("estimations", { story: currentStory, value: props.card.getValue() })
-        }
-        
+            fetch.post("estimations", {value: props.card.getValue() })
     }
     return (
         <li><button onClick={submit} value={props.card.getValue()}>{props.card.getValue()}</button></li>

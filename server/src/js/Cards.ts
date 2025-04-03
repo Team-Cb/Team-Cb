@@ -2,7 +2,7 @@ import axios from "axios";
 
 class Card {
     private cardValue: number;
-
+    _id?: number;
     constructor(cardValue: number) {
         this.cardValue = cardValue;
     }
