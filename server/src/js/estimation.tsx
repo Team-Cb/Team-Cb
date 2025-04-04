@@ -91,7 +91,7 @@ const StQueue = (props: { storyQueue: UserStoryQueue }) => { // returns the stor
             stories.push(<Story key={index} story={storyQueue.findAt(index)} list={true} />)
         }
         stories.push(<div key={0}><button id="storyButton" onClick={() => {
-            fetch.post("storyQueue", new UserStory("New story", stories.length + estimations.getLength() - 1))
+            fetch.post("storyQueue", new UserStory("New story", (stories.length + estimations.getLength())))
         }}>Add Story</button></div>)
         return stories
     }
