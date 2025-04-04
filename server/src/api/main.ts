@@ -1,7 +1,6 @@
 // restful server
 import path from "path";
 import express, { Express, NextFunction, Request, Response } from "express"
-import { getCards, getCard } from "../js/Data";
 import { UserStory } from "../js/UserStory";
 import { CardDataAccess, EstimatedStoryDataAccess, StoryDataAccess } from "../db/dataAccess";
 import { Card } from "../js/Cards";
@@ -21,17 +20,12 @@ app.get("/api/cards", async (inRequest: Request, inResponse: Response) => {
     inResponse.json(cards);
 });
 
-app.get("/api/cards/:id", async (inRequest: Request, inResponse: Response) => {
-    inResponse.type("json");
-    const id = parseInt(inRequest.params.id);
-    inResponse.json(getCard(id));
-});
 app.get("/api/storyQueue", async (inRequest: Request, inResponse: Response) => {
     inResponse.type("json");
     const stories: UserStory[] = await StoryDataAccess.getDataAccess().getStories();
     inResponse.json(stories);
 });
-app.get("/api/estimations", async (inRequest: Request, inResponse:Response) => {
+app.get("/api/estimations", async (inRequest: Request, inResponse: Response) => {
     inResponse.type("json");
     const stories: UserStory[] = await EstimatedStoryDataAccess.getDataAccess().getStories();
 
@@ -50,10 +44,9 @@ app.get("/*", (inRequest: Request, inResponse: Response) => {
 app.post("/api/estimations", async (inRequest: Request, inResponse: Response) => {
     inResponse.type("json");
     const stories = await StoryDataAccess.getDataAccess().getStories();
+    stories.sort((a, b) => a.id - b.id);
     const story = stories[0];
     story.storyValues = (inRequest.body.value);
-    console.log(inRequest.body);
-    
     const response: UserStory = await EstimatedStoryDataAccess.getDataAccess().addStory(story);
     StoryDataAccess.getDataAccess().removeStory(story);
     inResponse.json(response);

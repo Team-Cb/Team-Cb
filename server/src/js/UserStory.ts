@@ -1,12 +1,13 @@
-import axios from "axios";
 class UserStory {
+    id: number;
     private name: string;
     private description: string;
-    storyValues: number | undefined;
+    storyValues?: number;
     _id?: string;
-    constructor(name = "", storyValues: undefined | number = undefined, description = "") {
+    constructor(name = "", id: number, storyValues: undefined | number = undefined, description = "") {
+        this.id = id;
         this.name = name;
-        this.description = "";
+        this.description = description;
         this.storyValues = storyValues;
     }
     public setStoryValues(value: number): void {
@@ -34,21 +35,6 @@ class UserStoryQueue {
     private stories: UserStory[];
     constructor() {
         this.stories = [];
-    }
-    public async fetchStories(): Promise<void> {
-        const URL = window.location.protocol + "//" + window.location.host + "/api/"; // base url for http requests
-        let responses: any[] = [];
-        await axios.get(URL + "storyQueue")
-            .then((response) => {
-                responses = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        responses.forEach((story: any) => {
-            this.addStory(new UserStory(story.name, undefined));
-        }
-        )
     }
     // add to the array
     public addStory(story: UserStory): void {

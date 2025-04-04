@@ -222,7 +222,14 @@ h2 {
     box-shadow: none;
     width: 100%; */
 }
-
+#storyButton {
+    background-color: rgba(211, 211, 211, 0.798);
+    border: none; 
+    color: navy;
+    padding: 40px, 20px;
+    text-align: center;
+    font-size: 1rem;
+}
 /* Estimation Styles */
 #root #estimations {
     grid-row: 2 / span 2;
@@ -246,6 +253,23 @@ h2 {
     margin: 10px;
 }
 
+.story-small {
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 8px;
+}
+
+.story-medium {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px;
+}
+
+.story-large {
+    background-color: #f8d7da;
+    border-left: 4px solid #dc3545;
+    padding: 8px;
+}
 
 /* Action Styles */
 #storyQueue>ol>li>button:hover {
