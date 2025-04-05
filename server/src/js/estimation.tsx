@@ -84,10 +84,10 @@ const StQueue = (props: { storyQueue: UserStoryQueue }) => { // returns the stor
     const List = () => { // returns a list of stories for storyqueue
         let stories = []
         for (let index = 1; index < storyQueue.getLength() - 1; index++) {
-            if (index == 2) {
+            stories.push(<Story key={index} story={storyQueue.findAt(index)} list={true} />)
+            if (index == 1) {
                 stories.push(<li key={storyQueue.getLength() + 1}></li>)
             }
-            stories.push(<Story key={index} story={storyQueue.findAt(index)} list={true} />)
         }
         stories.push(<div key={0}><button id="storyButton" onClick={() => {
             fetch.post("storyQueue", new UserStory("New story"))
@@ -131,18 +131,6 @@ const Estimations = (props: { estimations: UserStoryQueue }) => { // returns alr
         if (value <= 5) return "story-medium";
         return "story-large";
     }    
-    const Estimation = (props: { userStory: UserStory | undefined }) => { // returns an already estimated story
-
-        if (props.userStory !== undefined && props.userStory.getStoryValues() !== undefined) {
-            story = new UserStory(props.userStory.toString(), props.userStory.getStoryValues());
-            estimations.addStory(story)
-            return (
-                <li className={getStyleClass(props.userStory.getStoryValues()!)}>
-                {props.userStory.toString()}: <br />{props.userStory.getStoryValues()}
-                </li>
-            )
-        }
-    }
     const [currentEstimations, setEstimations] = React.useState(props.estimations);
     useEffect(() => { // gets estimated stories
         fetch.get("estimations").then((response) => {
