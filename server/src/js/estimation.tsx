@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom"
 import { Card, Cards } from "./Cards"
 let storyQueue: UserStoryQueue = new UserStoryQueue();
 let estimations: UserStoryQueue = new UserStoryQueue();
-let count: number = 0;
 let cards: Cards = new Cards();
 let currentStory: UserStory | undefined;
 const URL = window.location.protocol + "//" + window.location.host + "/api/"; // base url for http requests
@@ -16,7 +15,7 @@ const fetch = axios.create({
     headers: {
         "Content-type": "application/json"
     },
-    timeout: 3000 // timeout in ms for http requests
+    timeout: 30000 // timeout in ms for http requests
 });
 
 const Estimation = () => { // returns Estimation page
@@ -79,7 +78,7 @@ const StQueue = (props: { storyQueue: UserStoryQueue }) => { // returns the stor
             response.data.forEach((story: any) => {
                 storyQueue.addStory(new UserStory(story.name, story.id))
             })
-            storyQueue.getStories().sort((a, b) => a.id - b.id);
+            storyQueue.getStories().sort((a, b) => a.id! - b.id!);
         })
     }, [])
     const List = () => { // returns a list of stories for storyqueue
@@ -91,7 +90,7 @@ const StQueue = (props: { storyQueue: UserStoryQueue }) => { // returns the stor
             stories.push(<Story key={index} story={storyQueue.findAt(index)} list={true} />)
         }
         stories.push(<div key={0}><button id="storyButton" onClick={() => {
-            fetch.post("storyQueue", new UserStory("New story", (stories.length + estimations.getLength())))
+            fetch.post("storyQueue", new UserStory("New story"))
         }}>Add Story</button></div>)
         return stories
     }
@@ -110,7 +109,7 @@ const StQueue = (props: { storyQueue: UserStoryQueue }) => { // returns the stor
 const Story = (props: { story: UserStory | undefined; list: boolean }) => { // returns a single story to be listed on the storyQueue
     let story: UserStory;
     if (props.story !== undefined) {
-        story = new UserStory(props.story.toString(), props.story.id);
+        story = new UserStory(props.story.toString(), props.story.id!);
         storyQueue.addStory(story)
         if (props.list) {
             return (
@@ -140,12 +139,12 @@ const Estimations = (props: { estimations: UserStoryQueue }) => { // returns alr
                 estimations.addStory(new UserStory(story.name, story.id, story.storyValues))
             }
             )
-            estimations.getStories().sort((a, b) => a.id - b.id)
+            estimations.getStories().sort((a, b) => a.id! - b.id!)
         })
     }, [])
     const Estimation = (props: { userStory: UserStory | undefined }) => { // returns an already estimated story
         if (props.userStory !== undefined && props.userStory.getStoryValues() !== undefined) {
-            story = new UserStory(props.userStory.toString(), props.userStory.id, props.userStory.getStoryValues());
+            story = new UserStory(props.userStory.toString(), props.userStory.id!, props.userStory.getStoryValues());
             estimations.addStory(story)
             return (
                 <li className={getStyleClass(props.userStory.getStoryValues()!)}>{props.userStory.toString()}: <br />{props.userStory.getStoryValues()}</li>

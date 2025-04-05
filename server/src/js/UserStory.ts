@@ -1,10 +1,10 @@
 class UserStory {
-    id: number;
-    private name: string;
-    private description: string;
+    id?: number;
+    name: string;
+    description: string;
     storyValues?: number;
     _id?: string;
-    constructor(name = "", id: number, storyValues: undefined | number = undefined, description = "") {
+    constructor(name = "", id?: number, storyValues: undefined | number = undefined, description = "") {
         this.id = id;
         this.name = name;
         this.description = description;

@@ -4,8 +4,10 @@ import express, { Express, NextFunction, Request, Response } from "express"
 import { UserStory } from "../js/UserStory";
 import { CardDataAccess, EstimatedStoryDataAccess, StoryDataAccess } from "../db/dataAccess";
 import { Card } from "../js/Cards";
+import { HttpStatusCode } from "axios";
 const port = 8080;
 const app: Express = express();
+let storyCount = 0;
 app.use(express.json());
 app.use("/", express.static(path.join(__dirname, "../../client/dist")));
 app.use((inRequest: Request, inResponse: Response, inNext: NextFunction) => {
@@ -23,6 +25,7 @@ app.get("/api/cards", async (inRequest: Request, inResponse: Response) => {
 app.get("/api/storyQueue", async (inRequest: Request, inResponse: Response) => {
     inResponse.type("json");
     const stories: UserStory[] = await StoryDataAccess.getDataAccess().getStories();
+    stories.forEach(story => { if (story.id! > storyCount) storyCount = story.id! + 1 })
     inResponse.json(stories);
 });
 app.get("/api/estimations", async (inRequest: Request, inResponse: Response) => {
@@ -44,16 +47,24 @@ app.get("/*", (inRequest: Request, inResponse: Response) => {
 app.post("/api/estimations", async (inRequest: Request, inResponse: Response) => {
     inResponse.type("json");
     const stories = await StoryDataAccess.getDataAccess().getStories();
-    stories.sort((a, b) => a.id - b.id);
+    stories.sort((a, b) => a.id! - b.id!);
     const story = stories[0];
-    story.storyValues = (inRequest.body.value);
-    const response: UserStory = await EstimatedStoryDataAccess.getDataAccess().addStory(story);
-    StoryDataAccess.getDataAccess().removeStory(story);
-    inResponse.json(response);
+    if (story != null) {
+        story.storyValues = (inRequest.body.value);
+        const response: UserStory = await EstimatedStoryDataAccess.getDataAccess().addStory(story);
+        StoryDataAccess.getDataAccess().removeStory(story);
+        inResponse.json(response);
+    } else [
+        inResponse.sendStatus(HttpStatusCode.BadRequest)
+    ]
+
+
 });
 app.post("/api/storyQueue/", async (inRequest: Request, inResponse: Response) => {
     inResponse.type("json");
-    const story: UserStory = await StoryDataAccess.getDataAccess().addStory(inRequest.body);
+    const initStory: UserStory = inRequest.body;
+    const story: UserStory = await StoryDataAccess.getDataAccess().addStory(new UserStory(initStory.name, storyCount))
+    storyCount++;
     inResponse.json(story);
 });
 app.listen(port, () => { console.log("Server at: http://localhost:" + port) });
