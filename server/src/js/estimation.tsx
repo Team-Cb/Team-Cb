@@ -82,7 +82,7 @@ const StoryDialogBox = () => {
                 story.setDescription(description);
                 fetch.post("storyQueue", story)
                 }}>
-                <textarea placeholder="Enter Story Name Here" name="name" id="storyName" onChange={event => {name = event.target.value}} required></textarea>
+                <input placeholder="Enter Story Name Here" name="name" id="storyName" onChange={event => {name = event.target.value}} required></input>
                 <textarea placeholder="Enter Story Description Here" name="description" id="storyDesc" onChange={event => {description = event.target.value}}></textarea>
                 <button type="submit" id="">Add Story</button>
             </form>
