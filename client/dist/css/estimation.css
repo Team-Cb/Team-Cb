@@ -11,7 +11,18 @@ li button {
     box-shadow: rgba(0, 0, 128, 0.25) 2px 2px 5px;
 }
 
-
+.modal {
+    display: flex;
+    flex-direction: column;
+}
+.modal #storyDesc {
+    resize: vertical;
+    max-height: 50vh;
+    min-height: fit-content;
+}
+.modal #storyName {
+    resize: none;
+}
 /* Body Styles */
 #root {
     display: grid;
@@ -225,7 +236,6 @@ h2 {
     position: fixed;
     bottom: 50px;
     left: 40px;
-    box-shadow: 1px 1px 5px black, 2px 2px 5px navy, 3px 3px 5px gray;
 }
 #storyButton:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
